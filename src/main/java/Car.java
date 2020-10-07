@@ -29,15 +29,15 @@ public class Car {
             moveRight();
 
         if(!isMoveLeft && x==60){
-            previousX = x;
+            previousX = x-1;
             previousY = y;
-            x=startingX;
+            x=0;
         }
         else if (isMoveLeft && x==0)
         {
-            previousX = x;
+            previousX = x+1;
             previousY = y;
-            x=startingX;
+            x=60;
         }
 
 
@@ -88,6 +88,8 @@ public class Car {
         previousY = y;
         x++;
     }
+
+
 
     @Override
     public String toString() {

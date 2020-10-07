@@ -5,6 +5,7 @@ import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -22,6 +23,8 @@ public class FrogCrossingRoadGame {
         terminal.setCursorVisible(false);
         Frog frog = new Frog(13,13, '\u263a');
         List<Car> cars = createCars();
+
+        printBackground(terminal);
 
 
 
@@ -41,16 +44,12 @@ public class FrogCrossingRoadGame {
             KeyStroke keyStroke = null;
             do {
                 index++;
-                if (index % 100 == 0) {
+                if (index % 20 == 0) {
 
                     moveCars(cars);
                     drawCars(terminal, cars);
                     terminal.flush();
-                    if (latestKeyStroke != null) {
-                        handlePlayer(frog, latestKeyStroke, terminal);
 
-
-                    }
                 }
 
                 Thread.sleep(5); // might throw InterruptedException
@@ -59,6 +58,13 @@ public class FrogCrossingRoadGame {
 
             } while (keyStroke == null);
             latestKeyStroke = keyStroke;
+            //if (latestKeyStroke != null)
+                handlePlayer(frog, latestKeyStroke, terminal);
+            moveCars(cars);
+            drawCars(terminal, cars);
+            terminal.flush();
+
+
             drawFrog(terminal, frog);
 
         }
@@ -96,12 +102,29 @@ public class FrogCrossingRoadGame {
     }
     private static List<Car> createCars() {
         List<Car> cars = new ArrayList<>();
-        cars.add(new Car(3, 3, 'X',false));
-        cars.add(new Car(50, 10, 'X',true));
 
-        cars.add(new Car(3, 9, 'X',false));
+
+        cars.add(new Car(3, 3, 'U',false));
+        cars.add(new Car(2, 3, 'U',false));
+        cars.add(new Car(1, 3, 'U',false));
+
+
+        cars.add(new Car(54, 6, 'X',true));
         cars.add(new Car(55, 6, 'X',true));
+        cars.add(new Car(56, 6, 'X',true));
 
+
+
+        cars.add(new Car(3, 9, 'Z',false));
+        cars.add(new Car(2, 9, 'Z',false));
+
+
+
+        cars.add(new Car(50, 10, 'H',true));
+        cars.add(new Car(51, 10, 'H',true));
+
+        for (Car car : cars)
+            System.out.println(car.toString());
 
         return cars;
     }
@@ -117,6 +140,7 @@ public class FrogCrossingRoadGame {
     private static void drawCars(Terminal terminal, List<Car> cars) throws IOException {
         terminal.flush();
         for (Car car : cars) {
+            System.out.println(car.getPreviousX());
             terminal.setCursorPosition(car.getPreviousX(), car.getPreviousY());
             terminal.putCharacter(' ');
 
@@ -139,6 +163,27 @@ public class FrogCrossingRoadGame {
         terminal.putCharacter(frog.getSymbol());
 
         terminal.flush();
+
+    }
+
+    private static void printBackground(Terminal t) throws IOException {
+
+        final char block = '\u2588';
+        for (int i = 0; i < 30; i++){
+            t.setForegroundColor(TextColor.ANSI.CYAN);
+            t.setCursorPosition(61, i);
+            t.putCharacter(block);
+            t.flush();
+        }
+
+        //Print roads
+        final char road = '-';
+        for (int i = 0; i < 60; i++){
+            t.setForegroundColor(TextColor.ANSI.CYAN);
+            t.setCursorPosition(i, 11);
+            t.putCharacter(road);
+            t.flush();
+        }
 
     }
 
