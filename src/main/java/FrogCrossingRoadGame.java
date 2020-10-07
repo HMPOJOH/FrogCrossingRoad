@@ -4,6 +4,8 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FrogCrossingRoadGame {
@@ -18,7 +20,10 @@ public class FrogCrossingRoadGame {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         Terminal terminal = terminalFactory.createTerminal();
         terminal.setCursorVisible(false);
-        Frog frog = new Frog(13,13, 'o');
+        Frog frog = new Frog(13,13, '\u263a');
+        List<Car> cars = createCars();
+
+
 
         terminal.setCursorPosition(frog.getX(), frog.getPreviousX());
         terminal.putCharacter('\u263a');
@@ -28,7 +33,7 @@ public class FrogCrossingRoadGame {
         //thread.start();
 
         KeyStroke latestKeyStroke = null;
-
+        drawCars(terminal, cars);
         boolean continueReadingInput = true;
         while (continueReadingInput) {
 
@@ -37,22 +42,28 @@ public class FrogCrossingRoadGame {
             do {
                 index++;
                 if (index % 100 == 0) {
+
+
+
                     if (latestKeyStroke != null) {
                         handlePlayer(frog, latestKeyStroke, terminal);
+
 
                     }
                 }
 
                 Thread.sleep(5); // might throw InterruptedException
                 keyStroke = terminal.pollInput();
-
+                moveCars(cars);
+                drawCars(terminal, cars);
 
             } while (keyStroke == null);
             latestKeyStroke = keyStroke;
-
+            drawFrog(terminal, frog);
 
         }
     }
+
     private static void handlePlayer (Frog frog, KeyStroke keyStroke, Terminal terminal) throws Exception {
         // Handle player
 
@@ -70,7 +81,7 @@ public class FrogCrossingRoadGame {
                 frog.moveLeft();
                 break;
         }
-
+/*
         // Draw player
         terminal.setCursorPosition(frog.getPreviousX(), frog.getPreviousY());
         terminal.putCharacter(' ');
@@ -79,7 +90,51 @@ public class FrogCrossingRoadGame {
         terminal.putCharacter('\u263a');
 
         terminal.flush();
+
+        */
+
     }
+    private static List<Car> createCars() {
+        List<Car> cars = new ArrayList<>();
+        cars.add(new Car(3, 3, 'X',false));
+
+        return cars;
+    }
+
+    private static void moveCars(List<Car> cars) {
+        for (Car car : cars) {
+            car.moveCar();
+        }
+    }
+
+
+    private static void drawCars(Terminal terminal, List<Car> cars) throws IOException {
+        for (Car car : cars) {
+            terminal.setCursorPosition(car.getPreviousX(), car.getPreviousY());
+            terminal.putCharacter(' ');
+
+            terminal.setCursorPosition(car.getX(), car.getY());
+            terminal.putCharacter(car.getSymbol());
+        }
+    }
+
+
+    private static void drawFrog(Terminal terminal, Frog frog) throws IOException {
+
+
+        terminal.flush();
+
+        terminal.setCursorPosition(frog.getPreviousX(), frog.getPreviousY());
+        terminal.putCharacter(' ');
+
+        terminal.setCursorPosition(frog.getX(), frog.getY());
+        terminal.putCharacter(frog.getSymbol());
+
+        terminal.flush();
+
+    }
+
+
 }
 
 
