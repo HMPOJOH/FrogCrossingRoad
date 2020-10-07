@@ -20,6 +20,14 @@ public class Car {
     }
 
     public void moveCar(){
+
+
+
+        if(isMoveLeft)
+            moveLeft();
+        else
+            moveRight();
+
         if(!isMoveLeft && x==60){
             previousX = x;
             previousY = y;
@@ -31,12 +39,6 @@ public class Car {
             previousY = y;
             x=startingX;
         }
-
-
-        if(isMoveLeft)
-            moveLeft();
-        else
-            moveRight();
 
 
     }

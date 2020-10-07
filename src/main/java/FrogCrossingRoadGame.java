@@ -98,6 +98,11 @@ public class FrogCrossingRoadGame {
         List<Car> cars = new ArrayList<>();
         cars.add(new Car(3, 3, 'X',false));
         cars.add(new Car(50, 10, 'X',true));
+
+        cars.add(new Car(3, 9, 'X',false));
+        cars.add(new Car(55, 6, 'X',true));
+
+
         return cars;
     }
 
