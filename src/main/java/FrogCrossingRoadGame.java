@@ -43,8 +43,9 @@ public class FrogCrossingRoadGame {
                 index++;
                 if (index % 100 == 0) {
 
-
-
+                    moveCars(cars);
+                    drawCars(terminal, cars);
+                    terminal.flush();
                     if (latestKeyStroke != null) {
                         handlePlayer(frog, latestKeyStroke, terminal);
 
@@ -54,8 +55,7 @@ public class FrogCrossingRoadGame {
 
                 Thread.sleep(5); // might throw InterruptedException
                 keyStroke = terminal.pollInput();
-                moveCars(cars);
-                drawCars(terminal, cars);
+
 
             } while (keyStroke == null);
             latestKeyStroke = keyStroke;
@@ -97,24 +97,27 @@ public class FrogCrossingRoadGame {
     private static List<Car> createCars() {
         List<Car> cars = new ArrayList<>();
         cars.add(new Car(3, 3, 'X',false));
-
+        cars.add(new Car(50, 10, 'X',true));
         return cars;
     }
 
     private static void moveCars(List<Car> cars) {
         for (Car car : cars) {
             car.moveCar();
+
         }
     }
 
 
     private static void drawCars(Terminal terminal, List<Car> cars) throws IOException {
+        terminal.flush();
         for (Car car : cars) {
             terminal.setCursorPosition(car.getPreviousX(), car.getPreviousY());
             terminal.putCharacter(' ');
 
             terminal.setCursorPosition(car.getX(), car.getY());
             terminal.putCharacter(car.getSymbol());
+            terminal.flush();
         }
     }
 

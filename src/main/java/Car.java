@@ -5,6 +5,7 @@ public class Car {
     private int previousX;
     private int previousY;
     boolean isMoveLeft;
+    private int startingX;
 
     public Car(int x, int y, char symbol, boolean isMoveLeft) {
         this.x = x;
@@ -13,12 +14,25 @@ public class Car {
         this.previousX = x;
         this.previousY = y;
         this.isMoveLeft=isMoveLeft;
-
+        startingX=x;
         moveCar();
 
     }
 
     public void moveCar(){
+        if(!isMoveLeft && x==60){
+            previousX = x;
+            previousY = y;
+            x=startingX;
+        }
+        else if (isMoveLeft && x==0)
+        {
+            previousX = x;
+            previousY = y;
+            x=startingX;
+        }
+
+
         if(isMoveLeft)
             moveLeft();
         else
