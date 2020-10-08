@@ -6,6 +6,7 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
@@ -35,8 +36,6 @@ public class FrogCrossingRoadGame {
        // Thread thread = new Thread(new Music());
         //thread.start();
 
-        String pontustest2="";
-
         KeyStroke latestKeyStroke = null;
         drawCars(terminal, cars);
         boolean continueReadingInput = true;
@@ -64,7 +63,7 @@ public class FrogCrossingRoadGame {
             } while (keyStroke == null);
 
 
-
+            String gameOver = " GAME OVER " ;
             if (!hitByCar(frog, cars)) {
                 latestKeyStroke = keyStroke;
                 //if (latestKeyStroke != null)
@@ -79,10 +78,17 @@ public class FrogCrossingRoadGame {
             else {
                 terminal.setCursorPosition(frog.getX(), frog.getY());
                 terminal.putCharacter('\u2588');
+
+                for (int i = 0; i < gameOver.length(); i++) {
+                    terminal.setCursorPosition(i+65, 4);
+                    terminal.setForegroundColor(TextColor.ANSI.RED);
+                    terminal.setBackgroundColor(TextColor.ANSI.BLACK);
+                    terminal.putCharacter(gameOver.charAt(i));
+                }
                 terminal.flush();
                 break;
             }
-
+            terminal.setForegroundColor(TextColor.ANSI.CYAN);
         }
     }
 
@@ -207,7 +213,7 @@ public class FrogCrossingRoadGame {
 
     }
 
-    private static void printBackground(Terminal t, Frog frog) throws IOException {
+    private static void printBackground(Terminal t, Frog frog) throws IOException, InterruptedException {
 
         final char block = '\u2588';
         for (int i = 0; i < 30; i++){
@@ -228,37 +234,66 @@ public class FrogCrossingRoadGame {
             }
         }
 
-        /*
-        String levelText = "LEVEL";
+        // Print out level info.
+        String levelText = "LEVEL " ;
         for (int i = 0; i < levelText.length(); i++) {
-            t.setCursorPosition(i+63, 12);
+            t.setCursorPosition(i+66, 2);
             t.setForegroundColor(TextColor.ANSI.RED);
             t.setBackgroundColor(TextColor.ANSI.BLACK);
-            t.putCharacter(levelText.charAt(i+'0'));
+            t.putCharacter(levelText.charAt(i));
         }
-        String level = "LEVEL";
-        t.setCursorPosition(70, 13);
-        t.setBackgroundColor(TextColor.ANSI.BLACK);
-        t.setForegroundColor(TextColor.ANSI.RED);
-        t.putCharacter((char)frog.getLevel());
-*/
+        //String level = "LEVEL" ;
+        String lvl = Integer.toString(frog.getLevel());
+        for (int i = 0; i < lvl.length(); i++) {
+            t.setCursorPosition(73, 2);
+            t.setBackgroundColor(TextColor.ANSI.BLACK);
+            t.setForegroundColor(TextColor.ANSI.RED);
+            t.putCharacter(lvl.charAt(i));
+        }
+        String gameTimeL = "TIME LEFT: " ;
+        for (int i = 0; i < gameTimeL.length(); i++) {
+            t.setCursorPosition(i+66, 6);
+            t.putCharacter(gameTimeL.charAt(i));
+        }
+        Date date = new Date();
+        long startTime = date.getTime();
+        long timer = 9;
+
+        while (true) {
+            long currentTime = (new Date().getTime() - startTime) / 1000;
+            //System.out.println(timer - currentTime);
+            long timeLeftL = timer - (timer - currentTime);
+            String timeLeft = Integer.toString((int)timeLeftL);
+            for (int i = 0; i < timeLeft.length(); i++) {
+                t.setCursorPosition(77, 6);
+                t.putCharacter(timeLeft.charAt(i));
+            }
+            if(currentTime >= timer) {
+                //System.out.println("GAME OVER!");
+                break;
+            }
+        }
+        /*int gameTime = 10;
+        String timeString = Integer.toString(gameTime);
+        for(int i = 10; i <= 0; i--){
+            for (int j = 0; j < timeString.length(); j++) {
+                t.setCursorPosition(77+j, 6);
+                t.putCharacter(timeString.charAt(j));
+            }
+            gameTime--;
+        }*/
+
+        t.setForegroundColor(TextColor.ANSI.CYAN);
+
     }
 
     private static boolean hitByCar(Frog frog, List<Car> cars){
-
-
-
-
         for (Car c:cars)
-            if (c.getX() == frog.getX() && c.getY() == frog.getY())
+            if (c.getX() == frog.getX() && c.getY() == frog.getY()) {
                 return true;
-
-
-
+            }
         return false;
     }
-
-
 }
 
 

@@ -5,7 +5,7 @@ public class Frog {
     private int previousX;
     private int previousY;
     private int points;
-    private int level;
+    public int level;
 
     public Frog(int x, int y, char symbol) {
         this.x = x;
