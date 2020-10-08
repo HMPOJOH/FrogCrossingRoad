@@ -35,6 +35,8 @@ public class FrogCrossingRoadGame {
        // Thread thread = new Thread(new Music());
         //thread.start();
 
+        String pontustest2="";
+
         KeyStroke latestKeyStroke = null;
         drawCars(terminal, cars);
         boolean continueReadingInput = true;
