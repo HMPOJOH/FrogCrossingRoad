@@ -55,16 +55,22 @@ public class FrogCrossingRoadGame {
                 Thread.sleep(5); // might throw InterruptedException
                 keyStroke = terminal.pollInput();
 
+                if(hitByCar(frog, cars))
+                    break;
+
 
             } while (keyStroke == null);
-            latestKeyStroke = keyStroke;
-            //if (latestKeyStroke != null)
-                handlePlayer(frog, latestKeyStroke, terminal);
-            moveCars(cars);
-            drawCars(terminal, cars);
-            terminal.flush();
+
+
 
             if (!hitByCar(frog, cars)) {
+                latestKeyStroke = keyStroke;
+                //if (latestKeyStroke != null)
+                handlePlayer(frog, latestKeyStroke, terminal);
+                moveCars(cars);
+                drawCars(terminal, cars);
+                terminal.flush();
+
                 drawFrog(terminal, frog);
                 printBackground(terminal);
             }
@@ -223,9 +229,14 @@ public class FrogCrossingRoadGame {
     }
 
     private static boolean hitByCar(Frog frog, List<Car> cars){
+
+
+
+
         for (Car c:cars)
-            if(c.getX()==frog.getX() && c.getY()== frog.getY())
+            if (c.getX() == frog.getX() && c.getY() == frog.getY())
                 return true;
+
 
 
         return false;
