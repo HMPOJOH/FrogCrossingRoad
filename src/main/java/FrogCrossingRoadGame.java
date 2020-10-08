@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 
+
 public class FrogCrossingRoadGame {
+    public static boolean isHitByCar=false;
     public static void main(String[] args) throws Exception {
         startGame();
 
@@ -37,6 +39,7 @@ public class FrogCrossingRoadGame {
         // Exemple of playing background music in new thread, just use Music class and these 2 lines:
         Thread thread = new Thread(new Music());
         thread.start();
+
 
         String pontustest2="";
 
@@ -80,6 +83,9 @@ public class FrogCrossingRoadGame {
                 printBackground(terminal, frog);
             }
             else {
+                thread.stop();
+                isHitByCar=true;
+                printBackground(terminal, frog);
                 printDeadFrog(terminal, frog);
                 break;
             }
@@ -87,20 +93,34 @@ public class FrogCrossingRoadGame {
         }
     }
 
-    private static void printDeadFrog(Terminal terminal, Frog frog) throws IOException {
+    private static void printDeadFrog(Terminal terminal, Frog frog) throws IOException, InterruptedException {
+
 
         terminal.setForegroundColor(TextColor.ANSI.RED);
+
         terminal.setCursorPosition(frog.getX(), frog.getY());
         terminal.putCharacter('\u2588');
+
         terminal.setCursorPosition(frog.getX()-1, frog.getY());
         terminal.putCharacter('\u2588');
         terminal.setCursorPosition(frog.getX()+1, frog.getY());
+
         terminal.putCharacter('\u2588');
         terminal.setCursorPosition(frog.getX(), frog.getY()+1);
+
+
         terminal.putCharacter('\u2588');
         terminal.setCursorPosition(frog.getX(), frog.getY()-1);
         terminal.putCharacter('\u2588');
+
         terminal.flush();
+        for (int i=0;i<20;i++) {
+            terminal.bell();
+
+            Thread.sleep(500);
+
+
+        }
 
     }
 
@@ -255,7 +275,7 @@ public class FrogCrossingRoadGame {
     private static void printBackground(Terminal t, Frog frog) throws IOException {
 
         final char block = '\u2588';
-        for (int i = 0; i < 30; i++){
+        for (int i = 0; i < 30; i++) {
             t.setForegroundColor(TextColor.ANSI.CYAN);
             t.setCursorPosition(61, i);
             t.putCharacter(block);
@@ -264,7 +284,7 @@ public class FrogCrossingRoadGame {
 
         //Print roads
         final char road = '-';
-        for (int j=0;j<24;j+=2) {
+        for (int j = 0; j < 24; j += 2) {
             for (int i = 0; i < 61; i++) {
                 t.setForegroundColor(TextColor.ANSI.CYAN);
                 t.setCursorPosition(i, j);
@@ -287,6 +307,31 @@ public class FrogCrossingRoadGame {
         t.setForegroundColor(TextColor.ANSI.RED);
         t.putCharacter((char)frog.getLevel());
 */
+        String[] printCarPicture = new String[11];
+        printCarPicture[0] = "   FROG ROAD  ";
+        printCarPicture[1] = "     ()-()    ";
+        printCarPicture[2] = "   .-(___)-.  ";
+        printCarPicture[3] = "    _<   >_    ";
+        printCarPicture[4] = "    \\/   \\/    ";
+        printCarPicture[5] = "              ";
+        printCarPicture[6] = "   ______     ";
+        printCarPicture[7] = " /|_||_\\`.__ ";
+        printCarPicture[8] = "(   _    _ _\\";
+        printCarPicture[9] = "=`-(_)--(_)-' ";
+        printCarPicture[10] = "Don't get hit ";
+        if(isHitByCar)
+            printCarPicture[10] = "You got hit! ";
+
+        for (int j = 0; j < printCarPicture.length; j++){
+            for (int i = 0; i < printCarPicture[j].length(); i++) {
+                t.setCursorPosition(i + 63, 2+j);
+                t.setForegroundColor(TextColor.ANSI.RED);
+                t.setBackgroundColor(TextColor.ANSI.BLACK);
+
+                t.putCharacter(printCarPicture[j].charAt(i));
+            }
+        }
+
     }
 
     private static boolean hitByCar(Frog frog, List<Car> cars){
