@@ -4,6 +4,7 @@ public class Frog {
     private char symbol;
     private int previousX;
     private int previousY;
+    private int points;
 
     public Frog(int x, int y, char symbol) {
         this.x = x;
@@ -12,7 +13,7 @@ public class Frog {
         this.previousX = x;
         this.previousY = y;
     }
-
+    public int getPoints(){return points;}
     public int getX() {
         return x;
     }
@@ -34,9 +35,20 @@ public class Frog {
     }
 
     public void moveUp(){
-        previousX = x;
-        previousY = y;
-        y-=2;
+        System.out.println("y: " + y);
+        points++;
+        if(y==1){
+            previousY=y;
+            previousX=x;
+            y=23;
+            points+=10;
+        }
+        else {
+
+            previousX = x;
+            previousY = y;
+            y -= 2;
+        }
     }
 
     public void moveDown(){

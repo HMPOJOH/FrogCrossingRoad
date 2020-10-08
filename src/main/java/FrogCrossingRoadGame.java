@@ -162,8 +162,8 @@ public class FrogCrossingRoadGame {
 
         cars.add(new Car(23, 21, 'H',false));
         cars.add(new Car(22, 21, 'H',false));
-        for (Car car : cars)
-            System.out.println(car.toString());
+       // for (Car car : cars)
+        //    System.out.println(car.toString());
 
         return cars;
     }
@@ -179,7 +179,7 @@ public class FrogCrossingRoadGame {
     private static void drawCars(Terminal terminal, List<Car> cars) throws IOException {
         terminal.flush();
         for (Car car : cars) {
-            System.out.println(car.getPreviousX());
+            //System.out.println(car.getPreviousX());
             terminal.setCursorPosition(car.getPreviousX(), car.getPreviousY());
             terminal.putCharacter(' ');
 
