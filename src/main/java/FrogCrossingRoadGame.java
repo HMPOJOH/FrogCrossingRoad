@@ -31,6 +31,7 @@ public class FrogCrossingRoadGame {
 
 
         terminal.setCursorPosition(frog.getX(), frog.getY());
+        terminal.setForegroundColor(TextColor.ANSI.WHITE);
         terminal.putCharacter(frog.getSymbol());
 
         // Exemple of playing background music in new thread, just use Music class and these 2 lines:
@@ -79,13 +80,28 @@ public class FrogCrossingRoadGame {
                 printBackground(terminal, frog);
             }
             else {
-                terminal.setCursorPosition(frog.getX(), frog.getY());
-                terminal.putCharacter('\u2588');
-                terminal.flush();
+                printDeadFrog(terminal, frog);
                 break;
             }
 
         }
+    }
+
+    private static void printDeadFrog(Terminal terminal, Frog frog) throws IOException {
+
+        terminal.setForegroundColor(TextColor.ANSI.RED);
+        terminal.setCursorPosition(frog.getX(), frog.getY());
+        terminal.putCharacter('\u2588');
+        terminal.setCursorPosition(frog.getX()-1, frog.getY());
+        terminal.putCharacter('\u2588');
+        terminal.setCursorPosition(frog.getX()+1, frog.getY());
+        terminal.putCharacter('\u2588');
+        terminal.setCursorPosition(frog.getX(), frog.getY()+1);
+        terminal.putCharacter('\u2588');
+        terminal.setCursorPosition(frog.getX(), frog.getY()-1);
+        terminal.putCharacter('\u2588');
+        terminal.flush();
+
     }
 
     private static void handlePlayer (Frog frog, KeyStroke keyStroke, Terminal terminal) throws Exception {
@@ -131,64 +147,64 @@ public class FrogCrossingRoadGame {
         int  randomCar = ThreadLocalRandom.current().nextInt(5,40);
 
 
-        cars.add(new Car(randomCar+1, 1, carFront,false, TextColor.ANSI.BLUE,1));
-        cars.add(new Car(randomCar, 1, carsymbol,false,TextColor.ANSI.RED, 1));
-        cars.add(new Car(randomCar-1, 1, carsymbol,false,TextColor.ANSI.RED, 1));
+        cars.add(new Car("car1", randomCar+1, 1, carFront,false, TextColor.ANSI.BLUE,3));
+        cars.add(new Car("car1", randomCar, 1, carsymbol,false,TextColor.ANSI.RED, 3));
+        cars.add(new Car("car1", randomCar-1, 1, carsymbol,false,TextColor.ANSI.RED, 3));
 
 
         randomCar = ThreadLocalRandom.current().nextInt(5,40);
         //car2 = index 3-5
-        cars.add(new Car(randomCar+1, 3, carFront,false,TextColor.ANSI.GREEN, 2));
-        cars.add(new Car(randomCar, 3, carsymbol,false,TextColor.ANSI.YELLOW, 2));
-        cars.add(new Car(randomCar-1, 3, carsymbol,false,TextColor.ANSI.YELLOW, 2));
+        cars.add(new Car("car2", randomCar+1, 3, carFront,false,TextColor.ANSI.GREEN, 2));
+        cars.add(new Car("car2", randomCar, 3, carsymbol,false,TextColor.ANSI.YELLOW, 2));
+        cars.add(new Car("car2", randomCar-1, 3, carsymbol,false,TextColor.ANSI.YELLOW, 2));
 
         //car3 = index 6-8
         randomCar = ThreadLocalRandom.current().nextInt(5,40);
-        cars.add(new Car(randomCar-1, 5, carFront,true,TextColor.ANSI.YELLOW, 1));
-        cars.add(new Car(randomCar, 5, carsymbol,true,TextColor.ANSI.GREEN, 1));
-        cars.add(new Car(randomCar+1, 5, carsymbol,true,TextColor.ANSI.GREEN, 1));
+        cars.add(new Car("car3", randomCar-1, 5, carFront,true,TextColor.ANSI.YELLOW, 1));
+        cars.add(new Car("car3", randomCar, 5, carsymbol,true,TextColor.ANSI.GREEN, 1));
+        cars.add(new Car("car3", randomCar+1, 5, carsymbol,true,TextColor.ANSI.GREEN, 1));
 
         randomCar = ThreadLocalRandom.current().nextInt(5,40);
-        cars.add(new Car(54, 7, carFront,true,TextColor.ANSI.GREEN, 1));
-        cars.add(new Car(55, 7, carsymbol,true,TextColor.ANSI.BLUE, 1));
-        cars.add(new Car(56, 7, carsymbol,true,TextColor.ANSI.BLUE, 1));
-
-
-        randomCar = ThreadLocalRandom.current().nextInt(5,40);
-        cars.add(new Car(3, 9, carFront,false,TextColor.ANSI.CYAN, 2));
-        cars.add(new Car(2, 9, carsymbol,false,TextColor.ANSI.MAGENTA, 2));
-        cars.add(new Car(1, 9, carsymbol,false,TextColor.ANSI.MAGENTA, 2));
-
-        randomCar = ThreadLocalRandom.current().nextInt(5,40);
-        cars.add(new Car(50, 11, carFront,true,TextColor.ANSI.YELLOW, 1));
-        cars.add(new Car(51, 11, carsymbol,true,TextColor.ANSI.GREEN, 1));
-        cars.add(new Car(52, 11, carsymbol,true,TextColor.ANSI.GREEN, 1));
-
-        randomCar = ThreadLocalRandom.current().nextInt(5,40);
-        cars.add(new Car(50, 13, carFront,true,TextColor.ANSI.GREEN, 1));
-        cars.add(new Car(51, 13, carsymbol,true,TextColor.ANSI.CYAN, 1));
-        cars.add(new Car(52, 13, carsymbol,true,TextColor.ANSI.CYAN, 1));
-
-        randomCar = ThreadLocalRandom.current().nextInt(5,40);
-        cars.add(new Car(47, 15, carFront,true,TextColor.ANSI.GREEN, 1));
-        cars.add(new Car(48, 15, carsymbol,true,TextColor.ANSI.YELLOW, 1));
-        cars.add(new Car(49, 15, carsymbol,true,TextColor.ANSI.YELLOW, 1));
-
-        randomCar = ThreadLocalRandom.current().nextInt(5,40);
-        cars.add(new Car(51, 17, carFront,true,TextColor.ANSI.MAGENTA, 1));
-        cars.add(new Car(52, 17, carsymbol,true,TextColor.ANSI.GREEN, 1));
-        cars.add(new Car(53, 17, carsymbol,true,TextColor.ANSI.GREEN, 1));
-
-        randomCar = ThreadLocalRandom.current().nextInt(5,40);
-        cars.add(new Car(45, 19, carFront,false,TextColor.ANSI.WHITE, 1));
-        cars.add(new Car(44, 19, carsymbol,false,TextColor.ANSI.CYAN, 1));
-        cars.add(new Car(43, 19, carsymbol,false,TextColor.ANSI.CYAN, 1));
+        cars.add(new Car("car4",54, 7, carFront,true,TextColor.ANSI.GREEN, 1));
+        cars.add(new Car("car4",55, 7, carsymbol,true,TextColor.ANSI.BLUE, 1));
+        cars.add(new Car("car4",56, 7, carsymbol,true,TextColor.ANSI.BLUE, 1));
 
 
         randomCar = ThreadLocalRandom.current().nextInt(5,40);
-        cars.add(new Car(23, 21, carFront,false,TextColor.ANSI.YELLOW, 2));
-        cars.add(new Car(22, 21, carsymbol,false,TextColor.ANSI.BLUE, 2));
-        cars.add(new Car(21, 21, carsymbol,false,TextColor.ANSI.BLUE, 2));
+        cars.add(new Car("car5",3, 9, carFront,false,TextColor.ANSI.CYAN, 2));
+        cars.add(new Car("car5",2, 9, carsymbol,false,TextColor.ANSI.MAGENTA, 2));
+        cars.add(new Car("car5",1, 9, carsymbol,false,TextColor.ANSI.MAGENTA, 2));
+
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        cars.add(new Car("car6",50, 11, carFront,true,TextColor.ANSI.YELLOW, 1));
+        cars.add(new Car("car6",51, 11, carsymbol,true,TextColor.ANSI.GREEN, 1));
+        cars.add(new Car("car6",52, 11, carsymbol,true,TextColor.ANSI.GREEN, 1));
+
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        cars.add(new Car("car7",50, 13, carFront,true,TextColor.ANSI.GREEN, 1));
+        cars.add(new Car("car7",51, 13, carsymbol,true,TextColor.ANSI.CYAN, 1));
+        cars.add(new Car("car7",52, 13, carsymbol,true,TextColor.ANSI.CYAN, 1));
+
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        cars.add(new Car("car8",47, 15, carFront,true,TextColor.ANSI.GREEN, 1));
+        cars.add(new Car("car8",48, 15, carsymbol,true,TextColor.ANSI.YELLOW, 1));
+        cars.add(new Car("car8",49, 15, carsymbol,true,TextColor.ANSI.YELLOW, 1));
+
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        cars.add(new Car("car9",50, 17, carFront,true,TextColor.ANSI.MAGENTA, 2));
+        cars.add(new Car("car9",51, 17, carsymbol,true,TextColor.ANSI.GREEN, 2));
+        cars.add(new Car("car9",52, 17, carsymbol,true,TextColor.ANSI.GREEN, 2));
+
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        cars.add(new Car("car10",45, 19, carFront,false,TextColor.ANSI.WHITE, 1));
+        cars.add(new Car("car10",44, 19, carsymbol,false,TextColor.ANSI.CYAN, 1));
+        cars.add(new Car("car10",43, 19, carsymbol,false,TextColor.ANSI.CYAN, 1));
+
+
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        cars.add(new Car("car11",23, 21, carFront,false,TextColor.ANSI.YELLOW, 2));
+        cars.add(new Car("car11",22, 21, carsymbol,false,TextColor.ANSI.BLUE, 2));
+        cars.add(new Car("car11",21, 21, carsymbol,false,TextColor.ANSI.BLUE, 2));
        // for (Car car : cars)
         //    System.out.println(car.toString());
 
@@ -206,7 +222,7 @@ public class FrogCrossingRoadGame {
     private static void drawCars(Terminal terminal, List<Car> cars) throws IOException {
         terminal.flush();
         for (Car car : cars) {
-            System.out.println(car + " " + car.getPreviousX());
+            //System.out.println(car + " " + car.getPreviousX());
             terminal.setCursorPosition(car.getPreviousX(), car.getPreviousY());
             terminal.putCharacter(' ');
 
@@ -229,6 +245,7 @@ public class FrogCrossingRoadGame {
         terminal.putCharacter(' ');
 
         terminal.setCursorPosition(frog.getX(), frog.getY());
+        terminal.setForegroundColor(TextColor.ANSI.WHITE);
         terminal.putCharacter(frog.getSymbol());
 
         terminal.flush();
@@ -278,8 +295,12 @@ public class FrogCrossingRoadGame {
 
 
         for (Car c:cars)
-            if (c.getX() == frog.getX() && c.getY() == frog.getY())
+            if (c.getX() == frog.getX() && c.getY() == frog.getY()){
+                System.out.println("You lost since you were hit by " + c.getName());
                 return true;
+
+            }
+
 
 
 

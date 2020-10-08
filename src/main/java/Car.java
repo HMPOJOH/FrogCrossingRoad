@@ -10,13 +10,20 @@ public class Car {
     private int startingX;
     private int carSpeed;
 
+    public String getName() {
+        return name;
+    }
+
+    private String name;
+
     public TextColor getCarColor() {
         return carColor;
     }
 
     private TextColor carColor;
 
-    public Car(int x, int y, char symbol, boolean isMoveLeft, TextColor carColor, int carSpeed) {
+    public Car(String name, int x, int y, char symbol, boolean isMoveLeft, TextColor carColor, int carSpeed) {
+        this.name=name;
         this.x = x;
         this.y = y;
         this.symbol = symbol;
@@ -49,16 +56,17 @@ public class Car {
 
 
         if(!isMoveLeft && x>=60){
-            System.out.println("x%carspeed:" + x%carSpeed);
+
             previousX = x-carSpeed;
             previousY = y;
-            x=0+x%carSpeed;
+            x=0+(x%carSpeed);
         }
-        else if (isMoveLeft && x<=carSpeed-1 && x%3==0)
+        else if (isMoveLeft && x<=0)
         {
+
             previousX = x+carSpeed;
             previousY = y;
-            x=60-x%carSpeed;
+            x=60-(1-x%Math.abs(carSpeed));
         }
 
 
@@ -114,8 +122,8 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Player{" +
-                "x=" + x +
+        return "Car{ name=" + name +
+                ", x=" + x +
                 ", y=" + y +
                 ", symbol=" + symbol +
                 ", previousX=" + previousX +
