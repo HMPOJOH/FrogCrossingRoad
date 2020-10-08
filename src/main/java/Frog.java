@@ -47,6 +47,7 @@ public class Frog {
             previousX=x;
             y=23;
             points+=10;
+            System.out.println("level: " + level + " - Points: " + points );
         }
         else {
 
