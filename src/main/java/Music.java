@@ -3,7 +3,7 @@ import java.io.File;
 import java.io.IOException;
 public class Music implements Runnable {
 
-    private String fileLocation = "backgroundmusic.wav";
+    private String fileLocation = "tetris.wav";
 
     public Music() {
     }

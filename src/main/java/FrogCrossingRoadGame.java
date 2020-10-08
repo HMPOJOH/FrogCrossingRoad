@@ -35,8 +35,8 @@ public class FrogCrossingRoadGame {
         terminal.putCharacter(frog.getSymbol());
 
         // Exemple of playing background music in new thread, just use Music class and these 2 lines:
-       // Thread thread = new Thread(new Music());
-        //thread.start();
+        Thread thread = new Thread(new Music());
+        thread.start();
 
         String pontustest2="";
 
@@ -48,7 +48,7 @@ public class FrogCrossingRoadGame {
             int index = 0;
             KeyStroke keyStroke = null;
             do {
-                index++;
+                index+=frog.getLevel()+1;
                 if (index % 20 == 0) {
 
                     moveCars(cars);
