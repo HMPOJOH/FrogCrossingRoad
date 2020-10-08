@@ -5,6 +5,7 @@ public class Frog {
     private int previousX;
     private int previousY;
     private int points;
+    private int level;
 
     public Frog(int x, int y, char symbol) {
         this.x = x;
@@ -12,8 +13,11 @@ public class Frog {
         this.symbol = symbol;
         this.previousX = x;
         this.previousY = y;
+        points=0;
+        level=0;
     }
     public int getPoints(){return points;}
+    public int getLevel(){return level;}
     public int getX() {
         return x;
     }
@@ -38,6 +42,7 @@ public class Frog {
         System.out.println("y: " + y);
         points++;
         if(y==1){
+            level++;
             previousY=y;
             previousX=x;
             y=23;

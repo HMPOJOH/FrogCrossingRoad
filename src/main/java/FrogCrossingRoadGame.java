@@ -24,7 +24,7 @@ public class FrogCrossingRoadGame {
         Frog frog = new Frog(13,23, '\u263a');
         List<Car> cars = createCars();
 
-        printBackground(terminal);
+        printBackground(terminal, frog);
 
 
 
@@ -72,7 +72,7 @@ public class FrogCrossingRoadGame {
                 terminal.flush();
 
                 drawFrog(terminal, frog);
-                printBackground(terminal);
+                printBackground(terminal, frog);
             }
             else {
                 terminal.setCursorPosition(frog.getX(), frog.getY());
@@ -205,7 +205,7 @@ public class FrogCrossingRoadGame {
 
     }
 
-    private static void printBackground(Terminal t) throws IOException {
+    private static void printBackground(Terminal t, Frog frog) throws IOException {
 
         final char block = '\u2588';
         for (int i = 0; i < 30; i++){
@@ -226,6 +226,20 @@ public class FrogCrossingRoadGame {
             }
         }
 
+        /*
+        String levelText = "LEVEL";
+        for (int i = 0; i < levelText.length(); i++) {
+            t.setCursorPosition(i+63, 12);
+            t.setForegroundColor(TextColor.ANSI.RED);
+            t.setBackgroundColor(TextColor.ANSI.BLACK);
+            t.putCharacter(levelText.charAt(i+'0'));
+        }
+        String level = "LEVEL";
+        t.setCursorPosition(70, 13);
+        t.setBackgroundColor(TextColor.ANSI.BLACK);
+        t.setForegroundColor(TextColor.ANSI.RED);
+        t.putCharacter((char)frog.getLevel());
+*/
     }
 
     private static boolean hitByCar(Frog frog, List<Car> cars){
