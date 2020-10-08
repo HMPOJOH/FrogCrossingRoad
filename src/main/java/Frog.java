@@ -36,13 +36,13 @@ public class Frog {
     public void moveUp(){
         previousX = x;
         previousY = y;
-        y--;
+        y-=2;
     }
 
     public void moveDown(){
         previousX = x;
         previousY = y;
-        y++;
+        y+=2;
     }
 
     public void moveLeft(){
