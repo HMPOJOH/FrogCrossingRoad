@@ -2,11 +2,13 @@ import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class FrogCrossingRoadGame {
@@ -118,52 +120,75 @@ public class FrogCrossingRoadGame {
     }
     private static List<Car> createCars() {
         List<Car> cars = new ArrayList<>();
-
+        final char carsymbol='\u2588';
+        final char carFront = '\u2584';
         //Create all cars
+        TextColor carColor = TextColor.ANSI.RED;
+
+        //terminal.setForegroundColor(TextColor.ANSI.RED);
+
+        //car1 = index 0-2
+        int  randomCar = ThreadLocalRandom.current().nextInt(5,40);
 
 
-        cars.add(new Car(3, 1, 'C',false));
-        cars.add(new Car(2, 1, 'C',false));
-        cars.add(new Car(1, 1, 'C',false));
+        cars.add(new Car(randomCar+1, 1, carFront,false, TextColor.ANSI.BLUE,1));
+        cars.add(new Car(randomCar, 1, carsymbol,false,TextColor.ANSI.RED, 1));
+        cars.add(new Car(randomCar-1, 1, carsymbol,false,TextColor.ANSI.RED, 1));
 
 
-        cars.add(new Car(3, 3, 'U',false));
-        cars.add(new Car(2, 3, 'U',false));
-        cars.add(new Car(1, 3, 'U',false));
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        //car2 = index 3-5
+        cars.add(new Car(randomCar+1, 3, carFront,false,TextColor.ANSI.GREEN, 2));
+        cars.add(new Car(randomCar, 3, carsymbol,false,TextColor.ANSI.YELLOW, 2));
+        cars.add(new Car(randomCar-1, 3, carsymbol,false,TextColor.ANSI.YELLOW, 2));
+
+        //car3 = index 6-8
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        cars.add(new Car(randomCar-1, 5, carFront,true,TextColor.ANSI.YELLOW, 1));
+        cars.add(new Car(randomCar, 5, carsymbol,true,TextColor.ANSI.GREEN, 1));
+        cars.add(new Car(randomCar+1, 5, carsymbol,true,TextColor.ANSI.GREEN, 1));
+
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        cars.add(new Car(54, 7, carFront,true,TextColor.ANSI.GREEN, 1));
+        cars.add(new Car(55, 7, carsymbol,true,TextColor.ANSI.BLUE, 1));
+        cars.add(new Car(56, 7, carsymbol,true,TextColor.ANSI.BLUE, 1));
 
 
-        cars.add(new Car(54, 5, 'X',true));
-        cars.add(new Car(55, 5, 'X',true));
-        cars.add(new Car(56, 5, 'X',true));
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        cars.add(new Car(3, 9, carFront,false,TextColor.ANSI.CYAN, 2));
+        cars.add(new Car(2, 9, carsymbol,false,TextColor.ANSI.MAGENTA, 2));
+        cars.add(new Car(1, 9, carsymbol,false,TextColor.ANSI.MAGENTA, 2));
 
-        cars.add(new Car(54, 7, 'X',true));
-        cars.add(new Car(55, 7, 'X',true));
-        cars.add(new Car(56, 7, 'X',true));
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        cars.add(new Car(50, 11, carFront,true,TextColor.ANSI.YELLOW, 1));
+        cars.add(new Car(51, 11, carsymbol,true,TextColor.ANSI.GREEN, 1));
+        cars.add(new Car(52, 11, carsymbol,true,TextColor.ANSI.GREEN, 1));
+
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        cars.add(new Car(50, 13, carFront,true,TextColor.ANSI.GREEN, 1));
+        cars.add(new Car(51, 13, carsymbol,true,TextColor.ANSI.CYAN, 1));
+        cars.add(new Car(52, 13, carsymbol,true,TextColor.ANSI.CYAN, 1));
+
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        cars.add(new Car(47, 15, carFront,true,TextColor.ANSI.GREEN, 1));
+        cars.add(new Car(48, 15, carsymbol,true,TextColor.ANSI.YELLOW, 1));
+        cars.add(new Car(49, 15, carsymbol,true,TextColor.ANSI.YELLOW, 1));
+
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        cars.add(new Car(51, 17, carFront,true,TextColor.ANSI.MAGENTA, 1));
+        cars.add(new Car(52, 17, carsymbol,true,TextColor.ANSI.GREEN, 1));
+        cars.add(new Car(53, 17, carsymbol,true,TextColor.ANSI.GREEN, 1));
+
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        cars.add(new Car(45, 19, carFront,false,TextColor.ANSI.WHITE, 1));
+        cars.add(new Car(44, 19, carsymbol,false,TextColor.ANSI.CYAN, 1));
+        cars.add(new Car(43, 19, carsymbol,false,TextColor.ANSI.CYAN, 1));
 
 
-
-        cars.add(new Car(3, 9, 'Z',false));
-        cars.add(new Car(2, 9, 'Z',false));
-
-
-
-        cars.add(new Car(50, 11, 'H',true));
-        cars.add(new Car(51, 11, 'H',true));
-
-        cars.add(new Car(50, 13, 'H',true));
-        cars.add(new Car(51, 13, 'H',true));
-
-        cars.add(new Car(50, 15, 'H',true));
-        cars.add(new Car(51, 15, 'H',true));
-
-        cars.add(new Car(50, 17, 'H',true));
-        cars.add(new Car(51, 17, 'H',true));
-
-        cars.add(new Car(45, 19, 'H',false));
-        cars.add(new Car(44, 19, 'H',false));
-
-        cars.add(new Car(23, 21, 'H',false));
-        cars.add(new Car(22, 21, 'H',false));
+        randomCar = ThreadLocalRandom.current().nextInt(5,40);
+        cars.add(new Car(23, 21, carFront,false,TextColor.ANSI.YELLOW, 2));
+        cars.add(new Car(22, 21, carsymbol,false,TextColor.ANSI.BLUE, 2));
+        cars.add(new Car(21, 21, carsymbol,false,TextColor.ANSI.BLUE, 2));
        // for (Car car : cars)
         //    System.out.println(car.toString());
 
@@ -181,12 +206,15 @@ public class FrogCrossingRoadGame {
     private static void drawCars(Terminal terminal, List<Car> cars) throws IOException {
         terminal.flush();
         for (Car car : cars) {
-            //System.out.println(car.getPreviousX());
+            System.out.println(car + " " + car.getPreviousX());
             terminal.setCursorPosition(car.getPreviousX(), car.getPreviousY());
             terminal.putCharacter(' ');
 
+
             terminal.setCursorPosition(car.getX(), car.getY());
+            terminal.setForegroundColor(car.getCarColor());
             terminal.putCharacter(car.getSymbol());
+
             terminal.flush();
         }
     }

@@ -1,3 +1,5 @@
+import com.googlecode.lanterna.TextColor;
+
 public class Car {
     private int x;
     private int y;
@@ -6,8 +8,15 @@ public class Car {
     private int previousY;
     boolean isMoveLeft;
     private int startingX;
+    private int carSpeed;
 
-    public Car(int x, int y, char symbol, boolean isMoveLeft) {
+    public TextColor getCarColor() {
+        return carColor;
+    }
+
+    private TextColor carColor;
+
+    public Car(int x, int y, char symbol, boolean isMoveLeft, TextColor carColor, int carSpeed) {
         this.x = x;
         this.y = y;
         this.symbol = symbol;
@@ -15,9 +24,15 @@ public class Car {
         this.previousY = y;
         this.isMoveLeft=isMoveLeft;
         startingX=x;
+        this.carColor=carColor;
+        this.carSpeed = carSpeed;
         moveCar();
 
+
     }
+
+    public void addCarSpeed(){carSpeed++;}
+    public void addCarSpeed(int add){carSpeed+=add;}
 
     public void moveCar(){
 
@@ -28,16 +43,22 @@ public class Car {
         else
             moveRight();
 
-        if(!isMoveLeft && x==60){
-            previousX = x-1;
+        //carspeed = 1 ok att träffa på 60 för
+        //carspeed = 2 och ismoveleft false ok att träffa på 60 för vissa och 59 om startingx = jämt dvs %2 = 0
+        //carspeed = 3
+
+
+        if(!isMoveLeft && x>=60){
+            System.out.println("x%carspeed:" + x%carSpeed);
+            previousX = x-carSpeed;
             previousY = y;
-            x=0;
+            x=0+x%carSpeed;
         }
-        else if (isMoveLeft && x==0)
+        else if (isMoveLeft && x<=carSpeed-1 && x%3==0)
         {
-            previousX = x+1;
+            previousX = x+carSpeed;
             previousY = y;
-            x=60;
+            x=60-x%carSpeed;
         }
 
 
@@ -80,13 +101,13 @@ public class Car {
     public void moveLeft(){
         previousX = x;
         previousY = y;
-        x--;
+        x-=carSpeed;
     }
 
     public void moveRight(){
         previousX = x;
         previousY = y;
-        x++;
+        x+=carSpeed;
     }
 
 
