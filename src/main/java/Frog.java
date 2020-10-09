@@ -58,9 +58,12 @@ public class Frog {
     }
 
     public void moveDown(){
-        previousX = x;
-        previousY = y;
-        y+=2;
+
+        if(y!=23) {
+            previousX = x;
+            previousY = y;
+            y += 2;
+        }
     }
 
     public void moveLeft(){
