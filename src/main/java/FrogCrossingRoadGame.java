@@ -112,8 +112,6 @@ public class FrogCrossingRoadGame {
 
         printBackground(terminal, frog);
 
-
-
         terminal.setCursorPosition(frog.getX(), frog.getY());
         terminal.setForegroundColor(TextColor.ANSI.WHITE);
         terminal.putCharacter(frog.getSymbol());
@@ -122,8 +120,6 @@ public class FrogCrossingRoadGame {
         Thread thread = new Thread(new Music());
         thread.start();
 
-
-        String pontustest2="";
 
         KeyStroke latestKeyStroke = null;
         drawCars(terminal, cars);
@@ -152,7 +148,7 @@ public class FrogCrossingRoadGame {
             } while (keyStroke == null);
 
 
-
+            String gameOver = " GAME OVER " ;
             if (!hitByCar(frog, cars)) {
                 latestKeyStroke = keyStroke;
                 //if (latestKeyStroke != null)
@@ -378,21 +374,23 @@ public class FrogCrossingRoadGame {
             }
         }
 
-        /*
-        String levelText = "LEVEL";
+        // Print out level info.
+        String levelText = "LEVEL " ;
         for (int i = 0; i < levelText.length(); i++) {
-            t.setCursorPosition(i+63, 12);
+            t.setCursorPosition(i+66, 2);
             t.setForegroundColor(TextColor.ANSI.RED);
             t.setBackgroundColor(TextColor.ANSI.BLACK);
-            t.putCharacter(levelText.charAt(i+'0'));
+            t.putCharacter(levelText.charAt(i));
         }
-        String level = "LEVEL";
-        t.setCursorPosition(70, 13);
-        t.setBackgroundColor(TextColor.ANSI.BLACK);
-        t.setForegroundColor(TextColor.ANSI.RED);
-        t.putCharacter((char)frog.getLevel());
-*/
-        String[] printCarPicture = new String[11];
+        //String level = "LEVEL" ;
+        String lvl = Integer.toString(frog.getLevel());
+        for (int i = 0; i < lvl.length(); i++) {
+            t.setCursorPosition(73, 2);
+            t.setBackgroundColor(TextColor.ANSI.BLACK);
+            t.setForegroundColor(TextColor.ANSI.RED);
+
+
+  String[] printCarPicture = new String[11];
         printCarPicture[0] = "   FROG ROAD  ";
         printCarPicture[1] = "     ()-()    ";
         printCarPicture[2] = "   .-(___)-.  ";
@@ -416,30 +414,21 @@ public class FrogCrossingRoadGame {
                 t.putCharacter(printCarPicture[j].charAt(i));
             }
         }
-
-
+            t.putCharacter(lvl.charAt(i));
+        }
+        t.setForegroundColor(TextColor.ANSI.CYAN);
 
     }
 
     private static boolean hitByCar(Frog frog, List<Car> cars){
-
-
-
-
         for (Car c:cars)
-            if (c.getX() == frog.getX() && c.getY() == frog.getY()){
-
+            if (c.getX() == frog.getX() && c.getY() == frog.getY())
                 return true;
-
-            }
-
 
 
 
         return false;
     }
-
-
 }
 
 
