@@ -1,9 +1,12 @@
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import org.w3c.dom.Text;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,16 +18,95 @@ import java.util.concurrent.ThreadLocalRandom;
 public class FrogCrossingRoadGame {
     public static boolean isHitByCar=false;
     public static void main(String[] args) throws Exception {
-        startGame();
-
-    }
-    private static void startGame() throws Exception {
-
-
-
+        boolean playGame=false;
+        int maxlevel = 0;
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         Terminal terminal = terminalFactory.createTerminal();
+        terminal.getTerminalSize();
         terminal.setCursorVisible(false);
+        intro(terminal,maxlevel);
+        //if(playGame)
+
+
+    }
+    private static void intro(Terminal terminal, int maxlevel) throws Exception {
+        terminal.setBackgroundColor(TextColor.ANSI.BLACK);
+
+
+        String[] printCarPicture = new String[22];
+        printCarPicture[0] = "   █████  █████   ██   ███      █████   ██     ███    ████    ";
+        printCarPicture[1] = "   █      █   █  █  █ █         █   █  █  █   █   █   █   █   ";
+        printCarPicture[2] = "   ███    █ █    █  █ █  █      █ █    █  █   █████   █    █  ";
+        printCarPicture[3] = "   █      █  █   █  █ █   █     █  █   █  █   █   █   █   █   ";
+        printCarPicture[4] = "   █      █   █   ██   ███      █   █   ██    █   █   ████    ";
+        printCarPicture[5] ="                                                             ";
+        printCarPicture[6] = "                         THE GAME                             ";
+        printCarPicture[7] = "   ---------------------------------------------------------  ";
+        printCarPicture[8] = "   -                                                       -  ";
+        printCarPicture[9] = "   -                 PRESS ENTER TO PLAY                   -  ";
+        printCarPicture[10] = "   -                                                       -  ";
+        printCarPicture[11] ="   -                 PRESS Q TO QUIT                       -  ";
+        printCarPicture[12] ="   ---------------------------------------------------------  ";
+        printCarPicture[13] ="    Current reached max level: " + maxlevel;
+        printCarPicture[14] ="                                                             ";
+        printCarPicture[15] ="      BY TEAM3:                                                    ";
+        printCarPicture[16] ="      ███       █   █        ███             ███   ";
+        printCarPicture[17] ="      █ █        █ █        █   █            █ █    ";
+        printCarPicture[18] ="      ███         █         █                ███        ";
+        printCarPicture[19] ="      █           █         █   █            █     ";
+        printCarPicture[20] ="      █ ontus     █ usri     ███  hristian   █ ooja";
+        printCarPicture[21] ="                                                         MI©E";
+
+
+        for (int j = 0; j < printCarPicture.length; j++){
+            for (int i = 0; i < printCarPicture[j].length(); i++) {
+
+                terminal.setCursorPosition(i + 3, 2+j);
+                if ((j>=0 && j<6) || (j>=16 && j<=19) )
+                    terminal.setForegroundColor(TextColor.ANSI.GREEN);
+                else
+                    terminal.setForegroundColor(TextColor.ANSI.WHITE);
+                terminal.setBackgroundColor(TextColor.ANSI.BLACK);
+
+                terminal.putCharacter(printCarPicture[j].charAt(i));
+
+            }
+        }
+        terminal.flush();
+        KeyType type;
+        Character c;
+        KeyStroke keyStroke = null;
+        boolean keepGoing=true;
+       while (keepGoing) {
+           keyStroke = null;
+           do {
+               Thread.sleep(5); // might throw InterruptedException
+               keyStroke = terminal.pollInput();
+           } while (keyStroke == null);
+           type = keyStroke.getKeyType();
+           c = keyStroke.getCharacter();
+           if (c == Character.valueOf('q')) {
+
+               System.out.println("quit");
+               keepGoing=false;
+               terminal.close();
+
+           } if (keyStroke.getKeyType() == KeyType.Enter) {
+               terminal.clearScreen();
+               startGame(terminal, maxlevel);
+               keepGoing=false;
+
+
+           }
+       }
+
+    }
+
+    private static void startGame(Terminal terminal, int maxlevel) throws Exception {
+
+
+
+
         Frog frog = new Frog(13,23, '\u263a');
         List<Car> cars = createCars();
 
@@ -83,17 +165,17 @@ public class FrogCrossingRoadGame {
                 printBackground(terminal, frog);
             }
             else {
-                thread.stop();
+                thread.stop(); //stop music
                 isHitByCar=true;
                 printBackground(terminal, frog);
-                printDeadFrog(terminal, frog);
+                printDeadFrog(terminal, frog, maxlevel);
                 break;
             }
 
         }
     }
 
-    private static void printDeadFrog(Terminal terminal, Frog frog) throws IOException, InterruptedException {
+    private static void printDeadFrog(Terminal terminal, Frog frog, int maxlevel) throws Exception {
 
 
         terminal.setForegroundColor(TextColor.ANSI.RED);
@@ -114,13 +196,16 @@ public class FrogCrossingRoadGame {
         terminal.putCharacter('\u2588');
 
         terminal.flush();
-        for (int i=0;i<20;i++) {
+        for (int i=0;i<15;i++) {
             terminal.bell();
 
             Thread.sleep(500);
 
 
         }
+        terminal.clearScreen();
+        Thread.sleep(500);
+        intro(terminal, (frog.getLevel()>maxlevel? frog.getLevel() : maxlevel));
 
     }
 
@@ -272,7 +357,7 @@ public class FrogCrossingRoadGame {
 
     }
 
-    private static void printBackground(Terminal t, Frog frog) throws IOException {
+    private static void printBackground(Terminal t, Frog frog) throws IOException, InterruptedException {
 
         final char block = '\u2588';
         for (int i = 0; i < 30; i++) {
@@ -332,6 +417,8 @@ public class FrogCrossingRoadGame {
             }
         }
 
+
+
     }
 
     private static boolean hitByCar(Frog frog, List<Car> cars){
@@ -341,7 +428,7 @@ public class FrogCrossingRoadGame {
 
         for (Car c:cars)
             if (c.getX() == frog.getX() && c.getY() == frog.getY()){
-                System.out.println("You lost since you were hit by " + c.getName());
+
                 return true;
 
             }

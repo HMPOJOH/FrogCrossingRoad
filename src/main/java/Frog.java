@@ -39,7 +39,7 @@ public class Frog {
     }
 
     public void moveUp(){
-        System.out.println("y: " + y);
+      //  System.out.println("y: " + y);
         points++;
         if(y==1){
             level++;
@@ -47,7 +47,7 @@ public class Frog {
             previousX=x;
             y=23;
             points+=10;
-            System.out.println("level: " + level + " - Points: " + points );
+          //  System.out.println("level: " + level + " - Points: " + points );
         }
         else {
 
