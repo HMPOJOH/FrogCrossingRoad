@@ -67,15 +67,20 @@ public class Frog {
     }
 
     public void moveLeft(){
-        previousX = x;
-        previousY = y;
-        x--;
+
+        if(x>0) {
+            previousX = x;
+            previousY = y;
+            x--;
+        }
     }
 
     public void moveRight(){
-        previousX = x;
-        previousY = y;
-        x++;
+        if(x<60) {
+            previousX = x;
+            previousY = y;
+            x++;
+        }
     }
 
     @Override
