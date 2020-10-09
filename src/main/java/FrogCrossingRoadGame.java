@@ -1,12 +1,10 @@
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 
@@ -15,9 +13,7 @@ public class FrogCrossingRoadGame {
         startGame();
 
     }
-    private static void startGame() throws Exception {
-
-
+    public static void startGame() throws Exception {
 
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         Terminal terminal = terminalFactory.createTerminal();
@@ -26,8 +22,6 @@ public class FrogCrossingRoadGame {
         List<Car> cars = createCars();
 
         printBackground(terminal, frog);
-
-
 
         terminal.setCursorPosition(frog.getX(), frog.getY());
         terminal.putCharacter(frog.getSymbol());
@@ -250,39 +244,6 @@ public class FrogCrossingRoadGame {
             t.setForegroundColor(TextColor.ANSI.RED);
             t.putCharacter(lvl.charAt(i));
         }
-        String gameTimeL = "TIME LEFT: " ;
-        for (int i = 0; i < gameTimeL.length(); i++) {
-            t.setCursorPosition(i+66, 6);
-            t.putCharacter(gameTimeL.charAt(i));
-        }
-        Date date = new Date();
-        long startTime = date.getTime();
-        long timer = 9;
-
-        while (true) {
-            long currentTime = (new Date().getTime() - startTime) / 1000;
-            //System.out.println(timer - currentTime);
-            long timeLeftL = timer - (timer - currentTime);
-            String timeLeft = Integer.toString((int)timeLeftL);
-            for (int i = 0; i < timeLeft.length(); i++) {
-                t.setCursorPosition(77, 6);
-                t.putCharacter(timeLeft.charAt(i));
-            }
-            if(currentTime >= timer) {
-                //System.out.println("GAME OVER!");
-                break;
-            }
-        }
-        /*int gameTime = 10;
-        String timeString = Integer.toString(gameTime);
-        for(int i = 10; i <= 0; i--){
-            for (int j = 0; j < timeString.length(); j++) {
-                t.setCursorPosition(77+j, 6);
-                t.putCharacter(timeString.charAt(j));
-            }
-            gameTime--;
-        }*/
-
         t.setForegroundColor(TextColor.ANSI.CYAN);
 
     }
