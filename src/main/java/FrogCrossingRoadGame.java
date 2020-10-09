@@ -378,7 +378,7 @@ public class FrogCrossingRoadGame {
         String levelText = "LEVEL " ;
         for (int i = 0; i < levelText.length(); i++) {
             t.setCursorPosition(i+66, 2);
-            t.setForegroundColor(TextColor.ANSI.RED);
+            t.setForegroundColor(TextColor.ANSI.CYAN);
             t.setBackgroundColor(TextColor.ANSI.BLACK);
             t.putCharacter(levelText.charAt(i));
         }
@@ -387,10 +387,11 @@ public class FrogCrossingRoadGame {
         for (int i = 0; i < lvl.length(); i++) {
             t.setCursorPosition(73, 2);
             t.setBackgroundColor(TextColor.ANSI.BLACK);
-            t.setForegroundColor(TextColor.ANSI.RED);
+            t.setForegroundColor(TextColor.ANSI.CYAN);
+            t.putCharacter(lvl.charAt(i));
+        }
 
-
-  String[] printCarPicture = new String[11];
+         String[] printCarPicture = new String[11];
         printCarPicture[0] = "   FROG ROAD  ";
         printCarPicture[1] = "     ()-()    ";
         printCarPicture[2] = "   .-(___)-.  ";
@@ -402,23 +403,23 @@ public class FrogCrossingRoadGame {
         printCarPicture[8] = "(   _    _ _\\";
         printCarPicture[9] = "=`-(_)--(_)-' ";
         printCarPicture[10] = "Don't get hit ";
-        if(isHitByCar)
-            printCarPicture[10] = "You got hit! ";
+
 
         for (int j = 0; j < printCarPicture.length; j++){
             for (int i = 0; i < printCarPicture[j].length(); i++) {
-                t.setCursorPosition(i + 63, 2+j);
-                t.setForegroundColor(TextColor.ANSI.RED);
+                t.setCursorPosition(i + 63, 5+j);
+                t.setForegroundColor(TextColor.ANSI.CYAN);
                 t.setBackgroundColor(TextColor.ANSI.BLACK);
 
                 t.putCharacter(printCarPicture[j].charAt(i));
             }
         }
-            t.putCharacter(lvl.charAt(i));
-        }
-        t.setForegroundColor(TextColor.ANSI.CYAN);
 
-    }
+
+        }
+
+
+
 
     private static boolean hitByCar(Frog frog, List<Car> cars){
         for (Car c:cars)
